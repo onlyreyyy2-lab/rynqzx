@@ -51,100 +51,6 @@ button,input { font-family:inherit; }
   box-shadow:0 18px 50px rgba(0,0,0,.3),0 0 28px rgba(153,190,130,.07);
 }
 
-/* WELCOME SCREEN */
-
-.welcome-screen {
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  display:grid;
-  place-items:center;
-  background:
-    radial-gradient(circle at 50% 45%,rgba(105,145,87,.2),transparent 42%),
-    #080d09;
-  opacity:1;
-  visibility:visible;
-  transition:opacity .9s ease,visibility .9s ease;
-}
-
-.welcome-screen.finished {
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-.welcome-content {
-  width:min(390px,85%);
-  text-align:center;
-  animation:welcomeAppear 1s ease both;
-}
-
-.welcome-logo {
-  font-size:65px;
-  font-weight:800;
-  letter-spacing:-5px;
-  margin-bottom:30px;
-}
-
-.welcome-logo span,
-.welcome-content h1 span { color:var(--green); }
-
-.welcome-label {
-  color:var(--muted);
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:4px;
-  margin-bottom:18px;
-}
-
-.welcome-content h1 {
-  font-size:clamp(24px,6vw,35px);
-  line-height:1.5;
-  letter-spacing:2px;
-}
-
-.loading-track {
-  height:3px;
-  background:rgba(255,255,255,.1);
-  border-radius:10px;
-  margin-top:35px;
-  overflow:hidden;
-}
-
-.loading-progress {
-  width:0%;
-  height:100%;
-  background:var(--green);
-  box-shadow:0 0 15px var(--green);
-  transition:width .04s linear;
-}
-
-.loading-info {
-  display:flex;
-  justify-content:space-between;
-  margin-top:12px;
-  color:var(--muted);
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-}
-
-.skip-loading {
-  margin-top:32px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
-  color:#dce7d6;
-  border-radius:30px;
-  padding:10px 18px;
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  cursor:pointer;
-}
-
-@keyframes welcomeAppear {
-  from { opacity:0; transform:translateY(18px); }
-  to { opacity:1; transform:translateY(0); }
-}
-
 /* NAVIGATION */
 
 nav {
@@ -615,29 +521,6 @@ body.no-animations *::after {
 
 <body>
 
-<!-- WELCOME SCREEN -->
-
-<div class="welcome-screen" id="welcomeScreen">
-  <div class="welcome-content">
-    <div class="welcome-logo">R<span>.</span></div>
-    <p class="welcome-label">DIGITAL IDENTITY / 001</p>
-    <h1>INITIALIZING<br><span>RYNNEXTDOOR</span></h1>
-
-    <div class="loading-track">
-      <div class="loading-progress" id="loadingProgress"></div>
-    </div>
-
-    <div class="loading-info">
-      <span>ESTABLISHING CONNECTION</span>
-      <span id="loadingPercent">00%</span>
-    </div>
-
-    <button class="skip-loading" id="skipWelcome">
-      SKIP INTRO ↗
-    </button>
-  </div>
-</div>
-
 <!-- NAVIGATION -->
 
 <nav>
@@ -651,7 +534,7 @@ body.no-animations *::after {
     <a href="#contact">Contact</a>
   </div>
 
-  <button class="menu-btn" id="menuButton">☰</button>
+  <button class="menu-btn" id="menuButton" aria-label="Toggle navigation">☰</button>
 </nav>
 
 <main class="container">
@@ -862,4 +745,79 @@ body.no-animations *::after {
   </div>
 
   <div class="terminal glass">
-    <div class="ter
+    <div class="terminal-head">
+      <span></span><span></span><span></span>
+      <small>rynnextdoor — terminal</small>
+    </div>
+
+    <div class="terminal-body" id="terminalBody">
+      <div class="terminal-output" id="terminalOutput">RYNNEXTDOOR SYSTEM [Version 1.0]
+Welcome to the interactive terminal.
+Type "help" to see available commands.</div>
+
+      <div class="terminal-line">
+        <span>visitor@rynnextdoor:~$</span>
+        <input id="terminalInput" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal command">
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- SETTINGS PANEL -->
+
+<div class="settings-panel glass" id="settingsPanel">
+  <div class="settings-heading">
+    <div>
+      <small>PERSONALIZE</small>
+      <h3>Settings</h3>
+    </div>
+    <button class="close-settings" id="closeSettings" aria-label="Close settings">×</button>
+  </div>
+
+  <div class="setting-item">
+    <div>
+      <strong>Accent Colour</strong>
+      <p>Choose your interface colour.</p>
+    </div>
+  </div>
+
+  <div class="colour-options">
+    <button class="colour-choice active" style="--swatch:#b9d2a5" data-colour="#b9d2a5" aria-label="Sage green"></button>
+    <button class="colour-choice" style="--swatch:#a5c9d2" data-colour="#a5c9d2" aria-label="Ice blue"></button>
+    <button class="colour-choice" style="--swatch:#c1addb" data-colour="#c1addb" aria-label="Lavender"></button>
+    <button class="colour-choice" style="--swatch:#dbc9a5" data-colour="#dbc9a5" aria-label="Champagne"></button>
+  </div>
+
+  <div class="setting-divider"></div>
+
+  <div class="setting-item">
+    <div>
+      <strong>Animations</strong>
+      <p>Enable interface transitions.</p>
+    </div>
+
+    <label class="switch">
+      <input type="checkbox" id="animationToggle" checked>
+      <span class="switch-slider"></span>
+    </label>
+  </div>
+
+  <div class="settings-footer">RYNNEXTDOOR / INTERFACE SETTINGS</div>
+</div>
+
+<button class="settings-trigger" id="settingsTrigger" aria-label="Open settings">⚙</button>
+
+<footer>
+  <div class="container">
+    <p>DESIGNED & DEVELOPED BY <span>RYNNEXTDOOR</span></p>
+    <p>© <span id="year"></span> — DIGITAL IDENTITY / 001</p>
+  </div>
+</footer>
+
+<script>
+/* MOBILE NAVIGATION */
+
+const menuButton = document.getElementById("menuButton");
+const navLinks 
