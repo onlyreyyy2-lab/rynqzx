@@ -4,820 +4,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d09">
-<title>rynnextdoor — Digital Identity</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>System Notice</title>
 
 <style>
-:root {
-  --green:#b9d2a5;
-  --muted:#8c9b89;
-  --border:rgba(255,255,255,.13);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
 
 body {
-  min-height:100vh;
-  color:#e9eee6;
-  font-family:Manrope,sans-serif;
-  background:
-    radial-gradient(ellipse at 12% 8%,rgba(75,112,67,.3),transparent 35%),
-    radial-gradient(ellipse at 90% 45%,rgba(43,82,51,.22),transparent 35%),
-    #080d09;
-  background-attachment:fixed;
-  overflow-x:hidden;
+    min-height: 100vh;
+    background: #050505;
+    color: #eee;
+    font-family: "Courier New", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+    position: relative;
 }
 
-a { color:inherit; text-decoration:none; }
-button,input { font-family:inherit; }
-
-.container { width:min(1040px,92%); margin:auto; }
-
-.glass {
-  background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.025));
-  backdrop-filter:blur(26px) saturate(165%);
-  -webkit-backdrop-filter:blur(26px) saturate(165%);
-  border:1px solid var(--border);
-  border-top-color:rgba(255,255,255,.23);
-  box-shadow:0 15px 45px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.1);
-  border-radius:22px;
-  transition:.35s ease;
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        transparent 0px,
+        rgba(255,255,255,.018) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+    z-index: 2;
 }
 
-.glass:hover {
-  border-color:rgba(185,210,165,.3);
-  box-shadow:0 18px 50px rgba(0,0,0,.3),0 0 28px rgba(153,190,130,.07);
+.glow {
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    background: #8b0000;
+    filter: blur(150px);
+    opacity: .12;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
 }
 
-/* NAVIGATION */
-
-nav {
-  position:sticky;
-  top:14px;
-  z-index:100;
-  margin:16px auto 0;
-  width:min(1040px,92%);
-  padding:13px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-radius:50px;
-  background:rgba(16,24,17,.7);
-  backdrop-filter:blur(30px);
-  -webkit-backdrop-filter:blur(30px);
-  border:1px solid rgba(255,255,255,.15);
+.container {
+    width: 100%;
+    max-width: 680px;
+    border: 1px solid #351313;
+    background: rgba(12,12,12,.96);
+    padding: 30px 22px;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 0 50px #8b000022;
 }
 
-.logo { font-size:14px; font-weight:800; letter-spacing:2px; }
-.logo span { color:var(--green); }
-
-.nav-links {
-  display:flex;
-  gap:22px;
-  font-size:11px;
-  color:#aeb9aa;
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #292020;
+    padding-bottom: 15px;
+    color: #777;
+    font-size: 10px;
+    letter-spacing: 2px;
+    gap: 10px;
 }
 
-.nav-links a:hover { color:var(--green); }
-.menu-btn { display:none; color:white; background:none; border:0; font-size:22px; cursor:pointer; }
-
-/* HERO */
-
-.hero {
-  padding:105px 0 75px;
-  display:grid;
-  grid-template-columns:1.3fr .7fr;
-  gap:28px;
-  align-items:center;
+.indicator {
+    color: #ff3535;
 }
 
-.eyebrow {
-  color:var(--green);
-  font-family:'DM Mono',monospace;
-  font-size:11px;
-  letter-spacing:3px;
-  margin-bottom:20px;
+.headline {
+    text-align: center;
+    padding: 65px 0 35px;
 }
 
-.hero h1 {
-  font-size:clamp(42px,8vw,82px);
-  line-height:1.02;
-  letter-spacing:-5px;
-  font-weight:800;
+h1 {
+    color: #e52525;
+    font-size: clamp(42px, 12vw, 76px);
+    letter-spacing: 5px;
+    text-shadow: 0 0 12px #ff000077;
+    animation: glitch 2.5s infinite;
 }
 
-.hero h1 span { color:var(--green); }
-
-.hero-desc {
-  color:#9ba899;
-  line-height:1.9;
-  font-size:13px;
-  max-width:470px;
-  margin:24px 0;
+@keyframes glitch {
+    0%, 92%, 100% {
+        transform: translate(0);
+    }
+    93% {
+        transform: translate(-2px, 1px);
+    }
+    95% {
+        transform: translate(2px, -1px);
+    }
+    97% {
+        transform: translate(-1px, 0);
+    }
 }
 
-.hero-actions { display:flex; gap:12px; flex-wrap:wrap; }
-
-.btn {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:12px 19px;
-  border-radius:40px;
-  font-size:11px;
-  font-weight:700;
-  transition:.3s;
-  cursor:pointer;
+.subtitle {
+    margin-top: 15px;
+    color: #888;
+    font-size: 11px;
+    letter-spacing: 3px;
 }
 
-.btn-primary {
-  background:linear-gradient(135deg,#d1e4bd,#91aa7d);
-  color:#172116;
+.divider {
+    width: 55px;
+    height: 2px;
+    background: #d82020;
+    margin: 0 auto 30px;
+    box-shadow: 0 0 12px red;
 }
 
-.btn-secondary {
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.05);
+.message {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    line-height: 2;
+    margin-bottom: 35px;
 }
 
-.btn:hover { transform:translateY(-3px); }
-
-.profile-card {
-  padding:28px;
-  min-height:280px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  position:relative;
-  overflow:hidden;
+.clock {
+    text-align: center;
+    color: #666;
+    font-size: 11px;
+    letter-spacing: 2px;
 }
 
-.profile-symbol {
-  width:65px;
-  height:65px;
-  display:grid;
-  place-items:center;
-  border-radius:20px;
-  background:rgba(190,220,170,.1);
-  border:1px solid rgba(190,220,170,.23);
-  font-size:26px;
-  color:var(--green);
+.bottom {
+    margin-top: 35px;
+    border-top: 1px solid #292020;
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    color: #555;
+    font-size: 9px;
+    letter-spacing: 1px;
+    gap: 10px;
 }
 
-.profile-card h3 { font-size:22px; margin:25px 0 6px; }
-.profile-card p { font-size:11px; color:var(--muted); }
-
-.online {
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  color:#c6dcb5;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
+.watermark {
+    position: fixed;
+    bottom: 16px;
+    right: 17px;
+    z-index: 10;
+    color: #e52525;
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: .75;
+    text-shadow: 0 0 12px red;
 }
 
-.dot {
-  width:7px;
-  height:7px;
-  background:#9acb83;
-  border-radius:50%;
-  box-shadow:0 0 12px #9acb83;
-}
-
-/* SECTIONS */
-
-section { padding:25px 0; }
-.section-heading { margin-bottom:20px; }
-
-.section-heading small {
-  color:var(--green);
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:3px;
-}
-
-.section-heading h2 { font-size:27px; margin-top:8px; }
-.section-heading p { font-size:12px; color:var(--muted); margin-top:7px; line-height:1.8; }
-
-.about-card { padding:28px; }
-.about-card p { color:#aeb9aa; font-size:13px; line-height:2; }
-
-.grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
-.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-
-.info-card { padding:23px; }
-.info-card:hover,.project-card:hover,.social-card:hover { transform:translateY(-4px); }
-
-.card-icon { font-size:22px; margin-bottom:17px; color:var(--green); }
-.info-card h3 { font-size:14px; margin-bottom:9px; }
-.info-card p { color:var(--muted); font-size:11px; line-height:1.9; }
-
-.tags { display:flex; flex-wrap:wrap; gap:9px; margin-top:15px; }
-
-.tag {
-  padding:8px 12px;
-  border:1px solid rgba(255,255,255,.13);
-  background:rgba(255,255,255,.045);
-  border-radius:30px;
-  color:#bdc9b8;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-}
-
-.project-card { padding:22px; min-height:155px; }
-.project-top { display:flex; justify-content:space-between; margin-bottom:20px; color:var(--green); }
-.project-card h3 { font-size:14px; }
-.project-card p { color:var(--muted); font-size:11px; line-height:1.8; margin-top:8px; }
-
-.service-card { padding:23px; }
-.service-card h3 { font-size:14px; margin-bottom:9px; }
-.service-card p { color:var(--muted); font-size:11px; line-height:1.9; }
-.service-price { margin-top:18px; color:var(--green); font-family:'DM Mono',monospace; font-size:10px; }
-
-.social-card { padding:19px; display:flex; align-items:center; gap:14px; }
-.social-icon {
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:14px;
-  background:rgba(183,211,160,.1);
-  border:1px solid rgba(183,211,160,.2);
-  color:var(--green);
-  font-size:17px;
-}
-
-.social-card h3 { font-size:12px; }
-.social-card p { font-size:10px; color:var(--muted); margin-top:4px; }
-
-.payment-card {
-  padding:25px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
-}
-
-.payment-card h3 { font-size:17px; }
-.payment-card p { color:var(--muted); font-size:11px; margin-top:7px; }
-
-/* TERMINAL */
-
-.terminal { overflow:hidden; border-radius:20px; }
-
-.terminal-head {
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:14px 18px;
-  background:rgba(255,255,255,.07);
-  border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.terminal-head span {
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#829b75;
-}
-
-.terminal-head small {
-  color:var(--muted);
-  margin-left:auto;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-}
-
-.terminal-body {
-  padding:20px;
-  background:rgba(0,0,0,.18);
-  min-height:220px;
-  max-height:340px;
-  overflow-y:auto;
-  font-family:'DM Mono',monospace;
-  font-size:11px;
-  line-height:2;
-}
-
-.terminal-output {
-  color:#a9c59a;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-  margin-bottom:10px;
-}
-
-.terminal-line { display:flex; gap:9px; align-items:center; }
-.terminal-line span { color:var(--green); }
-
-.terminal-line input {
-  background:transparent;
-  border:0;
-  outline:0;
-  color:#e1eadb;
-  font:inherit;
-  flex:1;
-  min-width:0;
-}
-
-/* SETTINGS */
-
-.settings-trigger {
-  position:fixed;
-  z-index:500;
-  right:22px;
-  bottom:22px;
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  color:var(--green);
-  font-size:22px;
-  cursor:pointer;
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(25,35,26,.72);
-  backdrop-filter:blur(25px);
-  -webkit-backdrop-filter:blur(25px);
-  box-shadow:0 8px 30px rgba(0,0,0,.3);
-  transition:.3s;
-}
-
-.settings-trigger:hover { transform:rotate(45deg); }
-
-.settings-panel {
-  position:fixed;
-  z-index:499;
-  right:22px;
-  bottom:85px;
-  width:min(320px,calc(100vw - 35px));
-  padding:22px;
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(12px) scale(.97);
-  transform-origin:bottom right;
-  transition:.3s ease;
-}
-
-.settings-panel.open {
-  opacity:1;
-  visibility:visible;
-  transform:translateY(0) scale(1);
-}
-
-.settings-heading {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-}
-
-.settings-heading small {
-  font-family:'DM Mono',monospace;
-  color:var(--green);
-  font-size:9px;
-  letter-spacing:2px;
-}
-
-.settings-heading h3 { font-size:20px; margin-top:5px; }
-
-.close-settings {
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.06);
-  color:white;
-  border-radius:50%;
-  width:30px;
-  height:30px;
-  cursor:pointer;
-}
-
-.setting-item {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.setting-item strong { font-size:12px; }
-.setting-item p { font-size:10px; color:var(--muted); margin-top:5px; }
-
-.colour-options { display:flex; gap:13px; margin-top:17px; }
-
-.colour-choice {
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  background:var(--swatch);
-  border:3px solid transparent;
-  outline:1px solid transparent;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.colour-choice.active {
-  outline-color:var(--swatch);
-  transform:scale(1.12);
-}
-
-.setting-divider { height:1px; background:var(--border); margin:22px 0; }
-
-.switch { position:relative; width:43px; height:24px; flex-shrink:0; }
-.switch input { opacity:0; width:0; height:0; }
-
-.switch-slider {
-  position:absolute;
-  inset:0;
-  border-radius:30px;
-  background:#414b40;
-  cursor:pointer;
-  transition:.3s;
-}
-
-.switch-slider::before {
-  content:"";
-  position:absolute;
-  width:18px;
-  height:18px;
-  left:3px;
-  top:3px;
-  border-radius:50%;
-  background:white;
-  transition:.3s;
-}
-
-.switch input:checked + .switch-slider { background:#78966a; }
-.switch input:checked + .switch-slider::before { transform:translateX(19px); }
-
-.settings-footer {
-  font-family:'DM Mono',monospace;
-  font-size:8px;
-  color:var(--muted);
-  text-align:center;
-  margin-top:22px;
-  letter-spacing:1px;
-}
-
-/* FOOTER */
-
-footer {
-  margin-top:70px;
-  padding:30px 0;
-  border-top:1px solid rgba(255,255,255,.09);
-  text-align:center;
-  color:#778374;
-  font-size:10px;
-  line-height:2;
-}
-
-footer span { color:var(--green); }
-
-/* ANIMATION SETTING */
-
-body.no-animations *,
-body.no-animations *::before,
-body.no-animations *::after {
-  animation:none !important;
-  transition:none !important;
-}
-
-/* MOBILE */
-
-@media(max-width:700px) {
-  nav { padding:12px 17px; }
-
-  .nav-links {
-    display:none;
-    position:absolute;
-    top:60px;
-    left:0;
-    right:0;
-    padding:20px;
-    flex-direction:column;
-    background:rgba(15,23,16,.94);
-    border:1px solid var(--border);
-    border-radius:20px;
-    backdrop-filter:blur(25px);
-  }
-
-  .nav-links.show { display:flex; }
-  .menu-btn { display:block; }
-
-  .hero {
-    padding:75px 0 45px;
-    grid-template-columns:1fr;
-  }
-
-  .hero h1 { letter-spacing:-3px; }
-  .grid-2,.grid-3 { grid-template-columns:1fr; }
-  .profile-card { min-height:230px; }
-  .section-heading h2 { font-size:23px; }
-  .payment-card { align-items:flex-start; }
-
-  .settings-trigger { right:15px; bottom:15px; }
-  .settings-panel { right:15px; bottom:77px; }
+@media(max-width: 400px) {
+    .container { padding: 23px 15px; }
+    .top, .bottom { font-size: 8px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVIGATION -->
-
-<nav>
-  <a href="#" class="logo">R<span>.</span></a>
-
-  <div class="nav-links" id="navLinks">
-    <a href="#about">About</a>
-    <a href="#activity">Activity</a>
-    <a href="#projects">Projects</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </div>
-
-  <button class="menu-btn" id="menuButton" aria-label="Toggle navigation">☰</button>
-</nav>
+<div class="glow"></div>
 
 <main class="container">
 
-<header class="hero">
-  <div>
-    <div class="eyebrow">DIGITAL IDENTITY / 001</div>
-    <h1>rynnext<br><span>door.</span></h1>
+    <header class="top">
+        <div>@rynqzx / SYSTEM NOTICE</div>
+        <div class="indicator">● HACKED</div>
+    </header>
 
-    <p class="hero-desc">
-      Exploring technology, writing code and building things
-      in the digital world. Always learning, always evolving.
-    </p>
+    <section class="headline">
+        <h1>HACKED</h1>
+        <div class="subtitle">
+            Your Website Have Been Hacked By @rynqzx
+        </div>
+    </section>
 
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="#about">EXPLORE PROFILE ↗</a>
-      <a class="btn btn-secondary" href="https://t.me/rynqzx" target="_blank" rel="noopener">CONTACT ME</a>
-    </div>
-  </div>
+    <div class="divider"></div>
 
-  <div class="profile-card glass">
-    <div>
-      <div class="profile-symbol">⌘</div>
-      <h3>rynnextdoor</h3>
-      <p>Independent digital explorer.</p>
-    </div>
-    <div class="online"><span class="dot"></span>DIGITAL PRESENCE ACTIVE</div>
-  </div>
-</header>
+    <section class="message">
+        
+        <br>
+        This website has been defaced.
+        No further information available.
 
-<section id="about">
-  <div class="section-heading">
-    <small>01 / INTRODUCTION</small>
-    <h2>About Me</h2>
-    <p>A little introduction about who I am.</p>
-  </div>
+    </section>
 
-  <div class="about-card glass">
-    <p>
-      I'm someone with a strong interest in coding, programming,
-      and technology. I enjoy exploring web development, learning
-      different programming languages, and understanding how
-      computer systems work. I'm also interested in cybersecurity,
-      software development, and discovering new things in the
-      digital world.
-      <br><br>
-      I spend my time learning, experimenting with code, and
-      improving my technical skills. There's always something
-      new to explore, and I enjoy the process of understanding
-      how things work behind the scenes.
-    </p>
-  </div>
-</section>
-
-<section id="activity">
-  <div class="section-heading">
-    <small>02 / CURRENT FOCUS</small>
-    <h2>Activity & Interests</h2>
-    <p>Things I enjoy exploring and learning.</p>
-  </div>
-
-  <div class="grid-2">
-    <div class="info-card glass">
-      <div class="card-icon">⌘</div>
-      <h3>Programming</h3>
-      <p>Learning programming concepts and experimenting with code.</p>
+    <div class="clock" id="clock">
+        --:--:--
     </div>
 
-    <div class="info-card glass">
-      <div class="card-icon">◈</div>
-      <h3>Website Development</h3>
-      <p>Exploring modern interfaces, layouts and web experiences.</p>
-    </div>
-
-    <div class="info-card glass">
-      <div class="card-icon">⌁</div>
-      <h3>Cybersecurity</h3>
-      <p>Learning about digital security, privacy and responsible practices.</p>
-    </div>
-
-    <div class="info-card glass">
-      <div class="card-icon">✳</div>
-      <h3>Technology</h3>
-      <p>Discovering new tools, systems and digital technologies.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="section-heading">
-    <small>03 / TOOLKIT</small>
-    <h2>Tech Stack</h2>
-    <p>Technologies and areas of interest.</p>
-  </div>
-
-  <div class="about-card glass">
-    <div class="tags">
-      <span class="tag">HTML</span>
-      <span class="tag">CSS</span>
-      <span class="tag">JavaScript</span>
-      <span class="tag">Python</span>
-      <span class="tag">Web Design</span>
-      <span class="tag">Programming</span>
-      <span class="tag">Cybersecurity</span>
-      <span class="tag">UI / UX</span>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="section-heading">
-    <small>04 / SELECTED WORK</small>
-    <h2>Projects & Exploration</h2>
-    <p>A collection of areas and concepts I'm interested in building.</p>
-  </div>
-
-  <div class="grid-3">
-    <div class="project-card glass">
-      <div class="project-top">◈ <span>01</span></div>
-      <h3>Personal Website</h3>
-      <p>Personal digital identity and profile interface.</p>
-    </div>
-
-    <div class="project-card glass">
-      <div class="project-top">⌘ <span>02</span></div>
-      <h3>Web Experiments</h3>
-      <p>Exploring layouts, effects and interactive web elements.</p>
-    </div>
-
-    <div class="project-card glass">
-      <div class="project-top">⌁ <span>03</span></div>
-      <h3>Code Learning</h3>
-      <p>Small coding experiments and programming practice.</p>
-    </div>
-  </div>
-</section>
-
-<section id="services">
-  <div class="section-heading">
-    <small>05 / WHAT I DO</small>
-    <h2>Services</h2>
-    <p>Digital assistance and creative work.</p>
-  </div>
-
-  <div class="grid-2">
-    <div class="service-card glass">
-      <div class="card-icon">◈</div>
-      <h3>Website Development</h3>
-      <p>Simple personal websites, landing pages and interface concepts.</p>
-      <div class="service-price">CUSTOM REQUESTS</div>
-    </div>
-
-    <div class="service-card glass">
-      <div class="card-icon">⌕</div>
-      <h3>Public Information Research</h3>
-      <p>Research using lawful public sources, with respect for privacy and consent.</p>
-      <div class="service-price">CUSTOM REQUESTS</div>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="section-heading">
-    <small>06 / CONNECTION</small>
-    <h2>Find Me Online</h2>
-    <p>Let's connect through my social platform.</p>
-  </div>
-
-  <div class="grid-2">
-    <a class="social-card glass" href="https://t.me/rynqzx" target="_blank" rel="noopener">
-      <div class="social-icon">✈</div>
-      <div><h3>Telegram</h3><p>@rynqzx</p></div>
-    </a>
-
-    <div class="social-card glass">
-      <div class="social-icon">⌘</div>
-      <div><h3>Activity</h3><p>Programming & Website Development</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="section-heading">
-    <small>07 / PAYMENT</small>
-    <h2>Payment Details</h2>
-    <p>Payment information and details.</p>
-  </div>
-
-  <div class="payment-card glass">
-    <div>
-      <h3>Payment Reference</h3>
-      <p>View the payment information below.</p>
-    </div>
-
-    <a class="btn btn-primary"
-       href="https://ganga--link--ghhzdp9sv8hk.code.run/i/3sbvvrmw40.jpg"
-       target="_blank" rel="noopener">
-      VIEW PAYMENT ↗
-    </a>
-  </div>
-</section>
-
-<section>
-  <div class="section-heading">
-    <small>08 / SYSTEM ACCESS</small>
-    <h2>Interactive Terminal</h2>
-    <p>A small interactive console. Type <b>help</b> to begin.</p>
-  </div>
-
-  <div class="terminal glass">
-    <div class="terminal-head">
-      <span></span><span></span><span></span>
-      <small>rynnextdoor — terminal</small>
-    </div>
-
-    <div class="terminal-body" id="terminalBody">
-      <div class="terminal-output" id="terminalOutput">RYNNEXTDOOR SYSTEM [Version 1.0]
-Welcome to the interactive terminal.
-Type "help" to see available commands.</div>
-
-      <div class="terminal-line">
-        <span>visitor@rynnextdoor:~$</span>
-        <input id="terminalInput" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal command">
-      </div>
-    </div>
-  </div>
-</section>
+    <footer class="bottom">
+        <span>@executeofficial</span>
+        <span>HACKED BY @rynqzx</span>
+    </footer>
 
 </main>
 
-<!-- SETTINGS PANEL -->
-
-<div class="settings-panel glass" id="settingsPanel">
-  <div class="settings-heading">
-    <div>
-      <small>PERSONALIZE</small>
-      <h3>Settings</h3>
-    </div>
-    <button class="close-settings" id="closeSettings" aria-label="Close settings">×</button>
-  </div>
-
-  <div class="setting-item">
-    <div>
-      <strong>Accent Colour</strong>
-      <p>Choose your interface colour.</p>
-    </div>
-  </div>
-
-  <div class="colour-options">
-    <button class="colour-choice active" style="--swatch:#b9d2a5" data-colour="#b9d2a5" aria-label="Sage green"></button>
-    <button class="colour-choice" style="--swatch:#a5c9d2" data-colour="#a5c9d2" aria-label="Ice blue"></button>
-    <button class="colour-choice" style="--swatch:#c1addb" data-colour="#c1addb" aria-label="Lavender"></button>
-    <button class="colour-choice" style="--swatch:#dbc9a5" data-colour="#dbc9a5" aria-label="Champagne"></button>
-  </div>
-
-  <div class="setting-divider"></div>
-
-  <div class="setting-item">
-    <div>
-      <strong>Animations</strong>
-      <p>Enable interface transitions.</p>
-    </div>
-
-    <label class="switch">
-      <input type="checkbox" id="animationToggle" checked>
-      <span class="switch-slider"></span>
-    </label>
-  </div>
-
-  <div class="settings-footer">RYNNEXTDOOR / INTERFACE SETTINGS</div>
-</div>
-
-<button class="settings-trigger" id="settingsTrigger" aria-label="Open settings">⚙</button>
-
-<footer>
-  <div class="container">
-    <p>DESIGNED & DEVELOPED BY <span>RYNNEXTDOOR</span></p>
-    <p>© <span id="year"></span> — DIGITAL IDENTITY / 001</p>
-  </div>
-</footer>
+<div class="watermark">@rynqzx</div>
 
 <script>
-/* MOBILE NAVIGATION */
+function updateClock() {
+    document.getElementById("clock").textContent =
+        new Date().toLocaleTimeString("en-GB");
+}
 
-const menuButton = document.getElementById("menuButton");
-const navLinks 
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+
+<audio autoplay loop>
+    <source src="https://ganga--link--ghhzdp9sv8hk.code.run/i/y3uncpxrsk.m4a" type="audio/mp4">
+</audio>
+
+</body>
+</html>
